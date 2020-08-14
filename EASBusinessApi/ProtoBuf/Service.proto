@@ -1,0 +1,109 @@
+﻿syntax = "proto3";
+package EASBusinessApi;
+
+
+// The greeting service definition.
+service BusinessProcessService {
+
+
+	rpc  DispatchCreate(DispatchRequest) returns (ExecuteResponse) {}
+	rpc  DispatchUpdate(DispatchRequest) returns (ExecuteResponse) {}
+
+	rpc ProcessCreate(ProcessRequest)returns (ExecuteResponse) {}
+
+	rpc AttachReports(AttachReportsRequest)returns(ExecuteResponse){}
+	rpc UpdateTransaction(UpdateTransactionRequest)returns(ExecuteResponse){}
+	
+}
+
+message UpdateTransactionRequest
+{
+	BusinessProcessKey ProcessKey=1;
+	string TransactionId=2;
+	string NewTransactionId=3;
+	int32 FiscalPrint=4;
+}
+
+message BusinessProcessKey
+{
+	string DataAreaId=1;
+	string StoreId=2;
+	string TerminalId=3;
+	string OperationId=4;
+}
+
+
+message ProcessRequest {
+
+	BusinessProcessKey ProcessKey=1;
+	
+	string StaffId=2;
+	
+	string OperationType=3;
+	
+	string EntityId=4;
+	
+	string ElementId=5;
+
+	int64 BeginTime=6;
+	int64 EndTime=7;
+
+	string TransactionId=8;
+	string Barcode=9;
+	
+}
+
+message DispatchRequest {
+
+	BusinessProcessKey ProcessKey=1;
+	
+	string StaffId=2;
+	
+	string OperationType=3;
+	
+	string EntityId=4;
+	
+	string DispatchId=5;
+
+	int64 BeginTime=6;
+	int64 EndTime=7;
+
+	string TransactionId=8;
+	
+}
+
+message AttachedReports
+{
+	string ReportsId=8;
+
+	string EntityId=2;
+	string ClassId=3;
+	string Description=4;
+	
+	int32 PageCount=5;
+	int32 NumberOfCopies=6;
+	int32 TotalPrintedPages=7;
+}
+
+message AttachReportsRequest {
+
+	BusinessProcessKey ProcessKey=1;
+	AttachedReports Reports=2;
+}
+
+
+message ExecuteResponse
+{
+	ErrorMessage message=1;
+}
+
+
+
+
+
+message ErrorMessage
+{
+	bool HasError=1;
+	string Description=2;
+}
+
